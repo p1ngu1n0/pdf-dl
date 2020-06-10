@@ -16,7 +16,7 @@ class pdfdownload:
 
     def geturls(self):
         for x in range(self.pages):
-            for url in BeautifulSoup(requests.get("https://www.google.com/search?q={}+filetype:pdf&sxsrf=ALeKk02cufcUtDUvzRbO4NONSchxqwoGXQ:1591737468701&ei=fPzfXruqKsPCgwfk9qj4Bw&start={}0&sa=N&ved=2ahUKEwi72JaT1PXpAhVD4eAKHWQ7Cn8Q8tMDegQIEhAw&biw=1536&bih=750".format(self.valor.replace(" ", "+"), x)).text, "html.parser").find_all("a"):
+            for url in BeautifulSoup(requests.get("https://www.google.com/search?q={}+filetype:pdf&start={}0".format(self.valor.replace(" ", "+"), x)).text, "html.parser").find_all("a"):
                 if url.attrs["href"][:7] == "/url?q=":
                     if url.attrs["href"][7:].split("&")[0][-4:] == ".pdf":
                         self.urls.append(url.attrs["href"][7:].split("&")[0])
@@ -48,6 +48,8 @@ class pdfdownload:
 
 
 def main():
+    print(''.join([chr(x) for x in [97, 117, 116, 111, 114,
+                                    58, 32, 112, 49, 110, 103, 117, 49, 110, 48]]))
     parser = argparse.ArgumentParser(description='pdfDownloader')
     requiredNamed = parser.add_argument_group('required named arguments')
     requiredNamed.add_argument('-n', '--name', metavar='N', action="store",
